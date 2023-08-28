@@ -1,3 +1,10 @@
+import taskmanager.Manager;
+import tasks.Epic;
+import tasks.Subtask;
+import tasks.Task;
+
+//import java.util.Scanner;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -9,17 +16,20 @@ public class Main {
         manager.addTask(taskOne);
         manager.addTask(taskTwo);
         //один эпик с 2 подзадачами
+
+        Epic epicOne = new Epic("Epic1", "Description of epic1");
+        manager.addTask(epicOne);
         Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1");
         Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2");
-        Epic epicOne = new Epic("Epic1", "Description of epic1");
         manager.addTask(subtaskOne);
         manager.addTask(subtaskTwo);
-        manager.addTask(epicOne);
+
         //эпик с 1 подзадачей
-        Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3");
         Epic epicTwo = new Epic("Epic2", "Description of epic2");
-        manager.addTask(subtaskThree);
         manager.addTask(epicTwo);
+        Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3");
+        manager.addTask(subtaskThree);
+
         //печать всех задач
         System.out.println("печать всех задач");
         manager.printTask();
@@ -31,14 +41,14 @@ public class Main {
         manager.printEpic();
         //меняем статус задачи1
         System.out.println("меняем статус задачи1");
-        taskOne.status = "DONE";
-        taskOne.description = "New description of task1";
+        taskOne.setStatus("DONE");
+        taskOne.setDescription("New description of task1");
         manager.updateTask(taskOne);
         manager.printTask();
         //меняем подзадачи Epic1
         System.out.println("меняем подзадачи Epic1");
-        subtaskOne.status = "IN_PROGRESS";
-        subtaskTwo.status = "DONE";
+        subtaskOne.setStatus("IN_PROGRESS");
+        subtaskTwo.setStatus("DONE");
         manager.updateTask(subtaskOne);
         manager.updateTask(subtaskTwo);
         manager.printSubTask();
@@ -46,7 +56,8 @@ public class Main {
         manager.printEpic();
         //меняем epic2
         System.out.println("меняем epic2");
-        subtaskThree.status = "DONE";
+        subtaskThree.setStatus("DONE");
+        manager.updateTask(subtaskThree);
         manager.updateTask(epicTwo);
         manager.printEpic();
         //удаляем task1
@@ -55,7 +66,7 @@ public class Main {
         manager.printTask();
         //удаляем подзадачу2 в epic1
         System.out.println("удаляем подзадачу2 в epic1");
-        manager.deleteSubTaskById(3);
+        manager.deleteSubTaskById(6);
         manager.printSubTask();
     }
 

@@ -1,4 +1,17 @@
+package tasks;
+
 public class Task {
+    protected String description;
+    protected int id;
+    protected String status;
+
+    public Task(String title, String description) {
+        this.title = title;
+        this.description = description;
+        this.status = "NEW";
+    }
+
+
     public String getTitle() {
         return title;
     }
@@ -35,14 +48,4 @@ public class Task {
 
     public Task() {
     }
-
-    public Task(String title, String description) {
-        this.title = title;
-        this.description = description;
-        this.status = "NEW";
-    }
-
-    String description;
-    int id;
-    String status;
 }
