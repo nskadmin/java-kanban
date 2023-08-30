@@ -22,18 +22,11 @@ public class Manager {
 
     public void addTask(Subtask subtask) {
         subtask.setId(nextId);
-        subtaskCollection.put(subtask.getId(), subtask);
-        List<Integer> lKeys = new ArrayList<Integer>(epicCollection.keySet());
-        if (lKeys.size() > 0) {
-            int keyId = lKeys.size() - 1;
-            subtask.setEpicTitle(lKeys.get(keyId));
-            Epic epic = epicCollection.get(lKeys.get(keyId));
-            epic.epicSubTasks.add(subtask.getId());
-            updateEpicStatus(epic);
-            nextId++;
-        } else {
-            System.out.println("Нельзя создать подзадачу без epica");
-        }
+        subtaskCollection.put(subtask.getId(), subtask);// добавляем в коллекцию подзадач
+        Epic epic = epicCollection.get(subtask.getEpicTitle());
+        epic.getEpicSubTasks().add(subtask.getId());//добавляем в коллекцию подзадач эпика
+        updateEpicStatus(epic);//обновляем статус эпика
+        nextId++;
     }
 
     public void addTask(Epic epic) {
@@ -47,37 +40,43 @@ public class Manager {
     }
 
     public void updateTask(Subtask subtask) {
-        subtaskCollection.put(subtask.getId(), subtask);
-        Epic epic = epicCollection.get(subtask.getEpicTitle());
-        updateEpicStatus(epic);
+        if (subtaskCollection.containsKey(subtask.getId())) {
+            subtaskCollection.put(subtask.getId(), subtask);
+            Epic epic = epicCollection.get(subtask.getEpicTitle());
+            updateEpicStatus(epic);
+        }
     }
 
     public void updateEpicStatus(Epic epic) {
-        if (epic.epicSubTasks.size() == 0) return;
-        String status = subtaskCollection.get(epic.epicSubTasks.get(0)).getStatus();
-        String prevStatus = status;
-        int count = 0;
-        for (Integer epicSubTask : epic.epicSubTasks) {
-            if (subtaskCollection.get(epicSubTask).getStatus().equals("IN_PROGRESS")) {
-                epic.setStatus("IN_PROGRESS");
-                return;
-            } else if (subtaskCollection.get(epicSubTask).getStatus().equals("NEW") && prevStatus.equals("NEW")) {
-                status = "NEW";
-            } else if (subtaskCollection.get(epicSubTask).getStatus().equals("DONE") && prevStatus.equals("DONE")) {
-                status = "DONE";
-            } else {
-                status = "IN_PROGRESS";
-                return;
-            }
-            prevStatus = status;
-            count++;
+        if (epic.getEpicSubTasks().size() == 0) {
+            epic.setStatus("NEW");
+            return;
         }
-        epic.setStatus(status);
-
+        int epicSize = epic.getEpicSubTasks().size();
+        int countNew = 0;
+        int countDone = 0;
+        int countInProgress = 0;
+        int count = 0;
+        for (Integer epicSubTask : epic.getEpicSubTasks()) {
+            if (subtaskCollection.get(epicSubTask).getStatus().equals("IN_PROGRESS")) {
+                countInProgress++;
+            } else if (subtaskCollection.get(epicSubTask).getStatus().equals("NEW")) {
+                countNew++;
+            } else if (subtaskCollection.get(epicSubTask).getStatus().equals("DONE")) {
+                countDone++;
+            }
+        }
+        if (countDone == epicSize) {
+            epic.setStatus("DONE");
+        } else if (countNew == epicSize) {
+            epic.setStatus("NEW");
+        } else if (countInProgress > 0) {
+            epic.setStatus("IN_PROGRESS");
+        }
     }
 
     public void updateTask(Epic epic) {
-        epicCollection.put(epic.getId(), epic);
+        if (epicCollection.containsKey(epic.getId())) epicCollection.put(epic.getId(), epic);
         //updateEpicStatus(epic);//обновляем статус epic
     }
 
@@ -98,7 +97,7 @@ public class Manager {
 
     public void printEpic() {
         epicCollection.forEach((key, value) -> {
-            if (value.epicSubTasks.size() == 0) value.setStatus("NEW");
+            if (value.getEpicSubTasks().size() == 0) value.setStatus("NEW");
             System.out.println("Id epic задачи: " + key + "; Имя epic задачи: " + value.getTitle() +
                     "; Описание epic задачи: " + value.getDescription() + "; Статус epic задачи: " + value.getStatus());
         });
@@ -110,7 +109,10 @@ public class Manager {
 
     public void deleteSubTask() {
         subtaskCollection.clear();
-        epicCollection.clear();
+        epicCollection.forEach((key, value) -> {
+            value.getEpicSubTasks().clear();
+            value.setStatus("New");
+        });
     }
 
     public void deleteEpic() {
@@ -136,14 +138,14 @@ public class Manager {
 
     public void deleteSubTaskById(Integer id) {
         Epic epic = epicCollection.get(subtaskCollection.get(id).getEpicTitle());
-        epic.epicSubTasks.remove(id);
+        epic.getEpicSubTasks().remove(id);
         subtaskCollection.remove(id);
         updateEpicStatus(epic);
     }
 
     public void deleteEpicById(Integer id) {
         Epic epic = epicCollection.get(id);
-        for (Integer epicSubTask : epic.epicSubTasks) {
+        for (Integer epicSubTask : epic.getEpicSubTasks()) {
             subtaskCollection.remove(epicSubTask);
         }
         epicCollection.remove(id);
@@ -157,9 +159,24 @@ public class Manager {
         return task;
     }
 
+    public ArrayList<Subtask> getAllSubtasksList() {
+        ArrayList<Subtask> subtasks = new ArrayList<>();
+        subtaskCollection.forEach((key, value) -> {
+            subtasks.add(value);
+        });
+        return subtasks;
+    }
+    public ArrayList<Epic> getAllEpicsList(){
+        ArrayList<Epic> epics=new ArrayList<>();
+        epicCollection.forEach((key,value)->{
+            epics.add(value);
+        });
+        return epics;
+    }
+
     public ArrayList<Subtask> getSubTasksOfEpic(Epic epic) {
         ArrayList<Subtask> subtask = new ArrayList<>();
-        for (Integer epicSubTask : epic.epicSubTasks) {
+        for (Integer epicSubTask : epic.getEpicSubTasks()) {
             subtask.add(subtaskCollection.get(epicSubTask));
         }
         return subtask;
@@ -168,7 +185,7 @@ public class Manager {
     public void printEpicSubTasks(Integer id) {
         epicCollection.forEach((key, value) -> {
             if (key.equals(id)) {
-                for (Integer epicSubTask : value.epicSubTasks) {
+                for (Integer epicSubTask : value.getEpicSubTasks()) {
                     System.out.println("Id подзадачи: " + subtaskCollection.get(epicSubTask).getId()
                             + "; Имя подзадачи: " + subtaskCollection.get(epicSubTask).getTitle()
                             + "; Описание подзадачи: " + subtaskCollection.get(epicSubTask).getDescription()

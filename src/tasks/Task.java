@@ -1,16 +1,19 @@
 package tasks;
 
 public class Task {
-    protected String description;
-    protected int id;
-    protected String status;
+    private String description;
+    private int id;
+    private String status;
+    private String title;
+
+    public Task() {
+    }
 
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
         this.status = "NEW";
     }
-
 
     public String getTitle() {
         return title;
@@ -44,8 +47,5 @@ public class Task {
         this.status = status;
     }
 
-    String title;
 
-    public Task() {
-    }
 }

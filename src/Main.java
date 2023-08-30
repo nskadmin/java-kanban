@@ -19,15 +19,15 @@ public class Main {
 
         Epic epicOne = new Epic("Epic1", "Description of epic1");
         manager.addTask(epicOne);
-        Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1");
-        Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2");
+        Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
+        Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2", epicOne.getId());
         manager.addTask(subtaskOne);
         manager.addTask(subtaskTwo);
 
         //эпик с 1 подзадачей
         Epic epicTwo = new Epic("Epic2", "Description of epic2");
         manager.addTask(epicTwo);
-        Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3");
+        Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3", epicTwo.getId());
         manager.addTask(subtaskThree);
 
         //печать всех задач
@@ -41,6 +41,7 @@ public class Main {
         manager.printEpic();
         //меняем статус задачи1
         System.out.println("меняем статус задачи1");
+        taskOne.setTitle("Task1-updated");
         taskOne.setStatus("DONE");
         taskOne.setDescription("New description of task1");
         manager.updateTask(taskOne);

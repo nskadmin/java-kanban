@@ -1,17 +1,14 @@
 package tasks;
 
 public class Subtask extends Task {
-    public int getEpicTitle() {
-        return epicTitle;
-    }
+    private int epicTitle;//tasks.Epic id за которым закреплен subtask
 
-    public void setEpicTitle(int epicTitle) {
+    public Subtask(String title, String description, int epicTitle) {
+        super(title, description);
         this.epicTitle = epicTitle;
     }
 
-    private int epicTitle;//tasks.Epic id за которым закреплен subtask
-
-    public Subtask(String title, String description) {
-        super(title, description);
+    public int getEpicTitle() {
+        return epicTitle;
     }
 }
