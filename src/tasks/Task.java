@@ -3,7 +3,7 @@ package tasks;
 public class Task {
     private String description;
     private int id;
-    private String status;
+    private TaskStatus status;
     private String title;
 
     public Task() {
@@ -12,7 +12,7 @@ public class Task {
     public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.status = "NEW";
+        this.status = TaskStatus.NEW;
     }
 
     public String getTitle() {
@@ -39,11 +39,11 @@ public class Task {
         this.id = id;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
     
