@@ -3,9 +3,10 @@ package taskmanager;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public interface HistoryManager {
-    public void add(Task task);
+     void add(Task task);
 
-    public ArrayList<Task> getHistory();
+     LinkedList<Task> getHistory();
 }

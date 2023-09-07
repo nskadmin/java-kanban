@@ -1,9 +1,7 @@
 package taskmanager;
 
-public final class Managers extends InMemoryTaskManager {
+public final class Managers {
     private Managers() {
-
-        super(getDefaultHistory());
     }
 
     public static HistoryManager getDefaultHistory() {
@@ -11,7 +9,7 @@ public final class Managers extends InMemoryTaskManager {
     }
 
     public static TaskManager getDefault() {
-        return new InMemoryTaskManager(getDefaultHistory());
+        return new InMemoryTaskManager();
     }
 
 }

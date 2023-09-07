@@ -3,24 +3,24 @@ package taskmanager;
 import tasks.Task;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public final class InMemoryHistoryManager implements HistoryManager {
-    private final static ArrayList<Task> history = new ArrayList<>();
-    private static int historyPosition = 0;
+    private static final int MAX_TASKS_IN_HISTORY = 10;
+    private final LinkedList<Task> history = new LinkedList<>();
 
     @Override
     public void add(Task task) {
-        if (historyPosition < 10 && task != null) {
-            history.add(task);
-            historyPosition++;
-        } else if (historyPosition == 10 && task != null) {
-            history.remove(0);
+        if (task != null) {
+            if (history.size() == MAX_TASKS_IN_HISTORY) {
+                history.remove(0);
+            }
             history.add(task);
         }
     }
 
     @Override
-    public ArrayList<Task> getHistory() {
+    public LinkedList<Task> getHistory() {
         return history;
     }
 }
