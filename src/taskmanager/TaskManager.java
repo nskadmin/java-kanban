@@ -46,5 +46,5 @@ public interface TaskManager {
 
     public void addTask(Task task);
 
-    public LinkedList<Task> getHistory();
+    public ArrayList<Task> getHistory();
 }
