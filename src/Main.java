@@ -44,6 +44,5 @@ public class Main {
                     + "; Описание: " + task.getDescription()
                     + "; Статус: " + task.getStatus());
         }
-
     }
 }

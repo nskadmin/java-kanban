@@ -4,15 +4,11 @@ import tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 
 public final class InMemoryHistoryManager implements HistoryManager {
-    private static final int MAX_TASKS_IN_HISTORY = 10;
     private Node<Task> head;
     private Node<Task> tail;
     private int size = 0;
-    private final ArrayList<Task> history = new ArrayList<>();
     private final HashMap<Integer, Node> historyAdded = new HashMap<>();
 
     public void removeNode(Node node) {
@@ -21,7 +17,11 @@ public final class InMemoryHistoryManager implements HistoryManager {
         }
 
         if (head.task.equals(node.task)) {
+
             head = head.next;
+            if (head != null) {
+                head.prev = null;
+            }
             size--;
             return;
         }
@@ -36,6 +36,9 @@ public final class InMemoryHistoryManager implements HistoryManager {
 
         if (current != null) {
             prev.next = current.next;
+            if (current.next != null) {
+                current.next.prev = current.prev;
+            }
             size--;
         }
     }
@@ -46,6 +49,7 @@ public final class InMemoryHistoryManager implements HistoryManager {
         while (current != null) {
             tasks.add(current.task);
             current = current.next;
+
         }
         return tasks;
     }
@@ -54,12 +58,12 @@ public final class InMemoryHistoryManager implements HistoryManager {
         final Node<Task> oldTail = tail;
         final Node<Task> newNode = new Node<>(tail, task, null);
         tail = newNode;
-        if (oldTail == null)
+        if (oldTail == null) {
             head = newNode;
-        else
+        } else {
             oldTail.next = newNode;
+        }
         historyAdded.put(task.getId(), newNode);
-        size++;
     }
 
     @Override
@@ -78,14 +82,8 @@ public final class InMemoryHistoryManager implements HistoryManager {
                 }
                 current.next = newNode;
             }
-
             size++;
-            if (size > MAX_TASKS_IN_HISTORY) {
-                remove(0);
-            }
-
             linkLast(task);
-
         }
     }
 
@@ -103,5 +101,23 @@ public final class InMemoryHistoryManager implements HistoryManager {
     @Override
     public ArrayList<Task> getHistory() {
         return getTasks();
+    }
+
+    private static class Node<T> {
+        public T task;
+        public Node<T> next;
+        public Node<T> prev;
+
+        public Node(T task) {
+            this.task = task;
+            this.next = null;
+            this.prev = null;
+        }
+
+        public Node(Node<T> prev, T task, Node<T> next) {
+            this.task = task;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 }

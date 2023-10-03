@@ -18,6 +18,31 @@ public class InMemoryTaskManager implements TaskManager {
     private int nextId = 0;
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
+    private void updateEpicStatus(Epic epic) {
+        if (epic.getEpicSubTasks().size() == 0) {
+            epic.setStatus(TaskStatus.NEW);
+            return;
+        }
+        int epicSize = epic.getEpicSubTasks().size();
+        int countNew = 0;
+        int countDone = 0;
+
+        for (Integer epicSubTask : epic.getEpicSubTasks()) {
+            if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.NEW)) {
+                countNew++;
+            } else if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.DONE)) {
+                countDone++;
+            }
+        }
+        if (countDone == epicSize) {
+            epic.setStatus(TaskStatus.DONE);
+        } else if (countNew == epicSize) {
+            epic.setStatus(TaskStatus.NEW);
+        } else {
+            epic.setStatus(TaskStatus.IN_PROGRESS);
+        }
+    }
+
     @Override
     public void addTask(Task task) {//добавление задач
         task.setId(nextId);
@@ -63,31 +88,6 @@ public class InMemoryTaskManager implements TaskManager {
             subtaskCollection.put(subtask.getId(), subtask);
             Epic epic = epicCollection.get(subtask.getEpicTitle());
             updateEpicStatus(epic);
-        }
-    }
-
-    private void updateEpicStatus(Epic epic) {
-        if (epic.getEpicSubTasks().size() == 0) {
-            epic.setStatus(TaskStatus.NEW);
-            return;
-        }
-        int epicSize = epic.getEpicSubTasks().size();
-        int countNew = 0;
-        int countDone = 0;
-
-        for (Integer epicSubTask : epic.getEpicSubTasks()) {
-            if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.NEW)) {
-                countNew++;
-            } else if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.DONE)) {
-                countDone++;
-            }
-        }
-        if (countDone == epicSize) {
-            epic.setStatus(TaskStatus.DONE);
-        } else if (countNew == epicSize) {
-            epic.setStatus(TaskStatus.NEW);
-        } else {
-            epic.setStatus(TaskStatus.IN_PROGRESS);
         }
     }
 
