@@ -16,6 +16,11 @@ public class InMemoryTaskManager implements TaskManager {
     private final Map<Integer, Subtask> subtaskCollection = new HashMap<>();
     private final Map<Integer, Epic> epicCollection = new HashMap<>();
     private int nextId = 0;
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     private void updateEpicStatus(Epic epic) {

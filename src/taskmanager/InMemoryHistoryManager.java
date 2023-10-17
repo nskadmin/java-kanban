@@ -9,7 +9,7 @@ public final class InMemoryHistoryManager implements HistoryManager {
     private Node<Task> head;
     private Node<Task> tail;
     private int size = 0;
-    private final HashMap<Integer, Node> historyAdded = new HashMap<>();
+    private final HashMap<Integer, Node<Task>> historyAdded = new HashMap<>();
 
     public void removeNode(Node node) {
         if (head == null) {

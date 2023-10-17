@@ -46,5 +46,19 @@ public class Task {
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
-    
+
+    @Override
+    public String toString() {
+        String tasktype = "";
+        String epicName = "";
+        if (this instanceof Epic) tasktype = String.valueOf(TaskType.EPIC);
+        else if (this instanceof Subtask) {
+            tasktype = String.valueOf(TaskType.SUBTASK);
+            epicName = String.valueOf(((Subtask) this).getEpicTitle());
+        } else tasktype = String.valueOf(TaskType.TASK);
+        return String.format("%d,%s,%s,%s,%s,%s", this.getId(), tasktype, this.getTitle(), this.getStatus(),
+                this.getDescription(), epicName);
+        //return null;
+    }
+
 }
