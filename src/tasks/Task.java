@@ -58,7 +58,6 @@ public class Task {
         } else tasktype = String.valueOf(TaskType.TASK);
         return String.format("%d,%s,%s,%s,%s,%s", this.getId(), tasktype, this.getTitle(), this.getStatus(),
                 this.getDescription(), epicName);
-        //return null;
     }
 
 }
