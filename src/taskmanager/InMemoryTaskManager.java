@@ -48,6 +48,21 @@ public class InMemoryTaskManager implements TaskManager {
         }
     }
 
+    public void addTaskById(Task task, int id) {
+        if (task instanceof Epic) {
+            epicCollection.put(id, (Epic) task);
+        } else if (task instanceof Subtask) {
+            subtaskCollection.put(id, (Subtask) task);
+        } else {
+            taskCollection.put(id, task);
+        }
+        if (nextId <= id) nextId = ++id;
+        /*считаю, что nextId не может быть меньше id добавляемой задачи, т.к.
+        при добавлении новых задач id в будущем можем перезаписать id
+        добавленный из файла
+        */
+    }
+
     @Override
     public void addTask(Task task) {//добавление задач
         task.setId(nextId);
