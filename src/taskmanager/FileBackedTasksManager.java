@@ -21,6 +21,7 @@ class ManagerSaveException extends RuntimeException {
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
+    private final String title = "id,type,name,status,description,epic" + System.lineSeparator();
 
     public static void main(String[] args) {
         //read from file
@@ -77,7 +78,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private void save() {
         File filePath = new File("resources\\historyManager.csv");
         try (FileWriter fileWriter = new FileWriter(filePath)) {
-            fileWriter.write("id,type,name,status,description,epic" + System.lineSeparator());
+            fileWriter.write(title);
             for (Task task : super.getAllTasksList()) {
                 fileWriter.write(task.toString() + System.lineSeparator());
             }
