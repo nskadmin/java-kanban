@@ -12,10 +12,10 @@ import java.util.Map;
 
 
 public class InMemoryTaskManager implements TaskManager {
-    private final Map<Integer, Task> taskCollection = new HashMap<>();
-    private final Map<Integer, Subtask> subtaskCollection = new HashMap<>();
-    private final Map<Integer, Epic> epicCollection = new HashMap<>();
-    private int nextId = 0;
+    protected final Map<Integer, Task> taskCollection = new HashMap<>();
+    protected final Map<Integer, Subtask> subtaskCollection = new HashMap<>();
+    protected final Map<Integer, Epic> epicCollection = new HashMap<>();
+    protected int nextId = 0;
 
     public HistoryManager getHistoryManager() {
         return historyManager;
@@ -67,7 +67,6 @@ public class InMemoryTaskManager implements TaskManager {
     public void addTask(Task task) {//добавление задач
         task.setId(nextId);
         taskCollection.put(task.getId(), task);
-        historyManager.add(task);
         nextId++;
     }
 
@@ -83,7 +82,6 @@ public class InMemoryTaskManager implements TaskManager {
         Epic epic = epicCollection.get(subtask.getEpicTitle());
         epic.getEpicSubTasks().add(subtask.getId());//добавляем в коллекцию подзадач эпика
         updateEpicStatus(epic);//обновляем статус эпика
-        historyManager.add(subtask);
         nextId++;
     }
 
@@ -91,7 +89,6 @@ public class InMemoryTaskManager implements TaskManager {
     public void addTask(Epic epic) {
         epic.setId(nextId);
         epicCollection.put(epic.getId(), epic);
-        historyManager.add(epic);
         nextId++;
     }
 
@@ -107,6 +104,7 @@ public class InMemoryTaskManager implements TaskManager {
         if (subtaskCollection.containsKey(subtask.getId())) {
             subtaskCollection.put(subtask.getId(), subtask);
             Epic epic = epicCollection.get(subtask.getEpicTitle());
+            epic.getEpicSubTasks().add(subtask.getId());
             updateEpicStatus(epic);
         }
     }
