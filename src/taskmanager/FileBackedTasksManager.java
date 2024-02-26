@@ -1,10 +1,10 @@
 package taskmanager;
+
 import java.util.*;
+
 import tasks.*;
+
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.ForkJoinPool;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
@@ -26,15 +26,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
         try (FileReader fileReader = new FileReader(file)) {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            bufferedReader.readLine();
+            bufferedReader.readLine();//1-я строка заголовок
             String line = bufferedReader.readLine();
             ArrayList<Task> readLinesFromFile = new ArrayList<>();
-            while (bufferedReader.ready() && !line.isEmpty()) {
+            while (bufferedReader.ready() && !line.isEmpty()) {//формируем список задач
                 readLinesFromFile.add(fileBackedTasksManager.fromString(line));
                 line = bufferedReader.readLine();
             }
-            line = bufferedReader.readLine();
-            for (Task val : readLinesFromFile) {
+            line = bufferedReader.readLine();//история
+            for (Task val : readLinesFromFile) {//заведение задач
                 if (val instanceof Epic) {
                     Epic epic = (Epic) val;
                     fileBackedTasksManager.addTaskById(epic, epic.getId());
@@ -45,14 +45,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     fileBackedTasksManager.addTaskById(val, val.getId());
                 }
             }
+
             updateAddedEpictasks(fileBackedTasksManager);
             List<Integer> arrayList = historyFromString(line);//список для загрузки истории
             for (Integer intVal : arrayList) {//добавление истории
-                for (Task task : readLinesFromFile) { 
+                for (Task task : readLinesFromFile) {
                     if ((task.getId() == intVal)) {
                         if (task instanceof Epic) {
                             fileBackedTasksManager.getEpicById(intVal);
-                        } else if (task instanceof Subtask) { 
+                        } else if (task instanceof Subtask) {
                             fileBackedTasksManager.getSubTaskById(intVal);
                         } else {
                             fileBackedTasksManager.getTaskById(intVal);
@@ -67,7 +68,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return fileBackedTasksManager;
     }
 
-    private void save() { 
+    private void save() {
         File filePath = new File("resources\\historyManager.csv");
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(title);
