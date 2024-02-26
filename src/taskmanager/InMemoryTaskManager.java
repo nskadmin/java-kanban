@@ -7,7 +7,6 @@ import tasks.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 
@@ -64,7 +63,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public void addTask(Task task) {//добавление задач
+    public void addTask(Task task) {
         task.setId(nextId);
         taskCollection.put(task.getId(), task);
         nextId++;
