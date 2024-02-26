@@ -24,24 +24,24 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private final String title = "id,type,name,status,description,epic" + System.lineSeparator();
 
     public static void main(String[] args) {
-        FileBackedTasksManager fbtToFile = new FileBackedTasksManager();
-        Epic epicTwo = new Epic("Epic2", "Description of epic2");
-        Subtask subTaskTwo = new Subtask("SubTask2", "Description of Subtask2", epicTwo.getId());
-        Subtask subTaskThree = new Subtask("SubTask3", "Description of Subtask3", epicTwo.getId());
-        fbtToFile.addTask(epicTwo);
-        fbtToFile.addTask(subTaskThree);
-        fbtToFile.addTask(subTaskTwo);
-        Epic epicThree = new Epic("Epic3", "Description of epic3");
-        fbtToFile.addTask(epicThree);
-        Subtask subTaskFour = new Subtask("SubTask4", "Description of Subtask4", epicThree.getId());
-        fbtToFile.addTask(subTaskFour);
-        Task taskOne = new Task("task1", "Description of task1");
-        fbtToFile.addTask(taskOne);
-
-        fbtToFile.getTaskById(taskOne.getId());
-        fbtToFile.getEpicById(epicTwo.getId());
-        fbtToFile.getSubTaskById(subTaskThree.getId());
-        fbtToFile.getSubTaskById(subTaskFour.getId());
+//        FileBackedTasksManager fbtToFile = new FileBackedTasksManager();
+//        Epic epicTwo = new Epic("Epic2", "Description of epic2");
+//        Subtask subTaskTwo = new Subtask("SubTask2", "Description of Subtask2", epicTwo.getId());
+//        Subtask subTaskThree = new Subtask("SubTask3", "Description of Subtask3", epicTwo.getId());
+//        fbtToFile.addTask(epicTwo);
+//        fbtToFile.addTask(subTaskThree);
+//        fbtToFile.addTask(subTaskTwo);
+//        Epic epicThree = new Epic("Epic3", "Description of epic3");
+//        fbtToFile.addTask(epicThree);
+//        Subtask subTaskFour = new Subtask("SubTask4", "Description of Subtask4", epicThree.getId());
+//        fbtToFile.addTask(subTaskFour);
+//        Task taskOne = new Task("task1", "Description of task1");
+//        fbtToFile.addTask(taskOne);
+//
+//        fbtToFile.getTaskById(taskOne.getId());
+//        fbtToFile.getEpicById(epicTwo.getId());
+//        fbtToFile.getSubTaskById(subTaskThree.getId());
+//        fbtToFile.getSubTaskById(subTaskFour.getId());
         //read from file
         File filePath = new File("resources\\historyManager.csv");
         FileBackedTasksManager fbtFromFile = loadFromFile(filePath);
