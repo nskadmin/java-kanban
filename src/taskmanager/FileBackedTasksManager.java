@@ -6,16 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.ForkJoinPool;
 
-class ManagerSaveException extends RuntimeException {
-    public ManagerSaveException() {
-        super("Ошибка при работе с файлом!");
-    }
-
-    public String getDetailMessage() {
-        return getMessage();
-    }
-}
-
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private final String title = "id,type,name,status,description,epic" + System.lineSeparator();
