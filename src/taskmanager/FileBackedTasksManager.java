@@ -58,11 +58,11 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             updateAddedEpictasks(fileBackedTasksManager);
             List<Integer> arrayList = historyFromString(line);//список для загрузки истории
             for (Integer intVal : arrayList) {//добавление истории
-                for (Task task : readLinesFromFile) {
+                for (Task task : readLinesFromFile) { 
                     if ((task.getId() == intVal)) {
                         if (task instanceof Epic) {
                             fileBackedTasksManager.getEpicById(intVal);
-                        } else if (task instanceof Subtask) {
+                        } else if (task instanceof Subtask) { 
                             fileBackedTasksManager.getSubTaskById(intVal);
                         } else {
                             fileBackedTasksManager.getTaskById(intVal);
@@ -77,7 +77,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         return fileBackedTasksManager;
     }
 
-    private void save() {
+    private void save() { 
         File filePath = new File("resources\\historyManager.csv");
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(title);
