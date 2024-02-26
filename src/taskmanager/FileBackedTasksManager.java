@@ -58,15 +58,15 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
         FileBackedTasksManager fileBackedTasksManager = new FileBackedTasksManager();
         try (FileReader fileReader = new FileReader(file)) {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-            bufferedReader.readLine();//1-я строка заголовок
+            bufferedReader.readLine();
             String line = bufferedReader.readLine();
             ArrayList<Task> readLinesFromFile = new ArrayList<>();
-            while (bufferedReader.ready() && !line.isEmpty()) {//формируем список задач
+            while (bufferedReader.ready() && !line.isEmpty()) {
                 readLinesFromFile.add(fileBackedTasksManager.fromString(line));
                 line = bufferedReader.readLine();
             }
-            line = bufferedReader.readLine();//история
-            for (Task val : readLinesFromFile) {//заведение задач
+            line = bufferedReader.readLine();
+            for (Task val : readLinesFromFile) {
                 if (val instanceof Epic) {
                     Epic epic = (Epic) val;
                     fileBackedTasksManager.addTaskById(epic, epic.getId());
@@ -77,7 +77,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     fileBackedTasksManager.addTaskById(val, val.getId());
                 }
             }
-
             updateAddedEpictasks(fileBackedTasksManager);
             List<Integer> arrayList = historyFromString(line);//список для загрузки истории
             for (Integer intVal : arrayList) {//добавление истории
