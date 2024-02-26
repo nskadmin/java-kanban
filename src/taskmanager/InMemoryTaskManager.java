@@ -17,6 +17,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected int nextId = 0;
 
     public HistoryManager getHistoryManager() {
+        
         return historyManager;
     }
 
