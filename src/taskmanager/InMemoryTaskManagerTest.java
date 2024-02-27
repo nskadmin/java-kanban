@@ -17,7 +17,6 @@ public class InMemoryTaskManagerTest {
         Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
         Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2", epicOne.getId());
         Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3", epicOne.getId());
-        
         inMemoryTaskManager.addTask(epicOne);
         inMemoryTaskManager.addTask(subtaskOne);
         inMemoryTaskManager.addTask(subtaskTwo);
@@ -35,7 +34,6 @@ public class InMemoryTaskManagerTest {
         Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
         Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2", epicOne.getId());
         Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3", epicOne.getId());
-        
         inMemoryTaskManager.addTask(epicOne);
         inMemoryTaskManager.addTask(subtaskOne);
         inMemoryTaskManager.addTask(subtaskTwo);
@@ -54,7 +52,6 @@ public class InMemoryTaskManagerTest {
         Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
         Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2", epicOne.getId());
         Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3", epicOne.getId());
-        
         inMemoryTaskManager.addTask(epicOne);
         inMemoryTaskManager.addTask(subtaskOne);
         inMemoryTaskManager.addTask(subtaskTwo);
@@ -69,7 +66,6 @@ public class InMemoryTaskManagerTest {
     public void addEpic() {
         TaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epicTwo = new Epic("Epic2", "Description of epic2");
-        
         inMemoryTaskManager.addTask(epicTwo);
         
         Assertions.assertEquals(0, (Integer) inMemoryTaskManager.getEpicById(0).getId());
