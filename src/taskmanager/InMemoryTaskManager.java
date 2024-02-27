@@ -17,6 +17,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected int nextId = 0;
 
     public HistoryManager getHistoryManager() {
+        
         return historyManager;
     }
 
@@ -32,6 +33,7 @@ public class InMemoryTaskManager implements TaskManager {
         int countDone = 0;
 
         for (Integer epicSubTask : epic.getEpicSubTasks()) {
+            
             if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.NEW)) {
                 countNew++;
             } else if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.DONE)) {
