@@ -91,7 +91,7 @@ public final class InMemoryHistoryManager implements HistoryManager {
     public void remove(int id) {
         if (historyAdded.get(id) != null) {
             Node node = historyAdded.remove(id);
-            if (node == null) {// если не было
+            if (node == null) { // если не было
                 return;
             }
             removeNode(node);
