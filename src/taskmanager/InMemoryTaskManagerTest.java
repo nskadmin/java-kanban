@@ -17,16 +17,17 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.addTask(epicTwo);
         
         Assertions.assertEquals(0, (Integer) inMemoryTaskManager.getEpicById(0).getId());
+        
     }
 
     @Test
     public void getByEpicOrSubtaskObject() {
         TaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epicOne = new Epic("Epic1", "Description of epic1");
-        inMemoryTaskManager.addTask(epicOne);
         Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
         Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2", epicOne.getId());
         Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3", epicOne.getId());
+        inMemoryTaskManager.addTask(epicOne);
         inMemoryTaskManager.addTask(subtaskOne);
         inMemoryTaskManager.addTask(subtaskTwo);
         inMemoryTaskManager.addTask(subtaskThree);
