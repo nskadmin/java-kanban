@@ -17,7 +17,6 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.addTask(epicTwo);
         
         Assertions.assertEquals(0, (Integer) inMemoryTaskManager.getEpicById(0).getId());
-        
     }
 
     @Test
