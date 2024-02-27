@@ -4,11 +4,9 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Task> taskCollection = new HashMap<>();
@@ -16,6 +14,7 @@ public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Epic> epicCollection = new HashMap<>();
     protected int nextId = 0;
 
+    
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
