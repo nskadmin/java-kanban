@@ -10,14 +10,15 @@ import java.util.ArrayList;
 public class InMemoryTaskManagerTest {
     @Test
     public void addEpic() {
-         TaskManager inMemoryTaskManager = Managers.getDefault();
+        TaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epicTwo = new Epic("Epic2", "Description of epic2");
         inMemoryTaskManager.addTask(epicTwo);
         Assertions.assertEquals(0,(Integer) inMemoryTaskManager.getEpicById(0).getId());
     }
+    
     @Test
     public void getByEpicOrSubtaskObject() {
-         TaskManager inMemoryTaskManager = Managers.getDefault();
+        TaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epicOne = new Epic("Epic1", "Description of epic1");
         inMemoryTaskManager.addTask(epicOne);
         Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
@@ -30,6 +31,7 @@ public class InMemoryTaskManagerTest {
         Assertions.assertSame(epicOne,inMemoryTaskManager.getEpicById(0));
         Assertions.assertSame(subtaskThree,inMemoryTaskManager.getSubTaskById(3));
     }
+    
     @Test
     public void getByNonExistId() {
         TaskManager inMemoryTaskManager = Managers.getDefault();
@@ -44,6 +46,7 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.deleteSubTaskById(1);
         Assertions.assertThrows(NullPointerException.class,()->{inMemoryTaskManager.deleteEpicById(1);});
     }
+    
     @Test
     public void historyListIsCorrectAfterOperations() {
         TaskManager inMemoryTaskManager = Managers.getDefault();
