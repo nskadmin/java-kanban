@@ -11,6 +11,15 @@ import java.util.ArrayList;
 public class InMemoryTaskManagerTest {
 
     @Test
+    public void addEpic() {
+        TaskManager inMemoryTaskManager = Managers.getDefault();
+        Epic epicTwo = new Epic("Epic2", "Description of epic2");
+        inMemoryTaskManager.addTask(epicTwo);
+        
+        Assertions.assertEquals(0, (Integer) inMemoryTaskManager.getEpicById(0).getId());
+    }
+
+    @Test
     public void getByEpicOrSubtaskObject() {
         TaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epicOne = new Epic("Epic1", "Description of epic1");
@@ -60,14 +69,5 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.deleteSubTaskById(3);
         
         Assertions.assertEquals(tasks, inMemoryTaskManager.getHistory());
-    }
-
-    @Test
-    public void addEpic() {
-        TaskManager inMemoryTaskManager = Managers.getDefault();
-        Epic epicTwo = new Epic("Epic2", "Description of epic2");
-        inMemoryTaskManager.addTask(epicTwo);
-        
-        Assertions.assertEquals(0, (Integer) inMemoryTaskManager.getEpicById(0).getId());
     }
 }
