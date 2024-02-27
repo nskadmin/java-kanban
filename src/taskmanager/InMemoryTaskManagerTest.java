@@ -5,23 +5,9 @@ import org.junit.jupiter.api.Test;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
-
 import java.util.ArrayList;
 
 public class InMemoryTaskManagerTest {
-//    private static TaskManager inMemoryTaskManager = Managers.getDefault();
-
-//    @Test
-//    public void addEpicAndThreeSubTasks() {
-//        Epic epicOne = new Epic("Epic1", "Description of epic1");
-//        inMemoryTaskManager.addTask(epicOne);
-//        Subtask subtaskOne = new Subtask("Subtask1", "Description of subtask1", epicOne.getId());
-//        Subtask subtaskTwo = new Subtask("Subtask2", "Description of subtask2", epicOne.getId());
-//        Subtask subtaskThree = new Subtask("Subtask3", "Description of subtask3", epicOne.getId());
-//        inMemoryTaskManager.addTask(subtaskOne);
-//        inMemoryTaskManager.addTask(subtaskTwo);
-//        inMemoryTaskManager.addTask(subtaskThree);
-//    }
     @Test
     public void addEpic() {
          TaskManager inMemoryTaskManager = Managers.getDefault();
