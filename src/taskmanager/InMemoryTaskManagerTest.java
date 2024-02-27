@@ -15,7 +15,6 @@ public class InMemoryTaskManagerTest {
         TaskManager inMemoryTaskManager = Managers.getDefault();
         Epic epicTwo = new Epic("Epic2", "Description of epic2");
         inMemoryTaskManager.addTask(epicTwo);
-        
         Assertions.assertEquals(0, (Integer) inMemoryTaskManager.getEpicById(0).getId());
     }
 
@@ -31,7 +30,6 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.addTask(subtaskTwo);
         inMemoryTaskManager.addTask(subtaskThree);
         inMemoryTaskManager.deleteSubTaskById(1);
-        
         Assertions.assertSame(epicOne, inMemoryTaskManager.getEpicById(0));
         Assertions.assertSame(subtaskThree, inMemoryTaskManager.getSubTaskById(3));
     }
@@ -48,7 +46,6 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.addTask(subtaskTwo);
         inMemoryTaskManager.addTask(subtaskThree);
         inMemoryTaskManager.deleteSubTaskById(1);
-        
         Assertions.assertThrows(NullPointerException.class, () -> {
             inMemoryTaskManager.deleteEpicById(1);
         });
@@ -67,7 +64,6 @@ public class InMemoryTaskManagerTest {
         ArrayList<Task> tasks = inMemoryTaskManager.getHistory();
         inMemoryTaskManager.addTask(subtaskThree);
         inMemoryTaskManager.deleteSubTaskById(3);
-        
         Assertions.assertEquals(tasks, inMemoryTaskManager.getHistory());
     }
 }
