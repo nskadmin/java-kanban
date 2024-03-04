@@ -9,9 +9,10 @@ import java.io.*;
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
     private final String title = "id,type,name,status,description,epic" + System.lineSeparator();
+    private static final String userDirectoryPath = System.getProperty("user.dir") + "\\src\\main\\resources\\historyManager.csv";
 
     public static void main(String[] args) {
-        File filePath = new File("resources\\historyManager.csv");
+        File filePath = new File(userDirectoryPath);
         FileBackedTasksManager fbtFromFile = loadFromFile(filePath);
         System.out.println(fbtFromFile.getHistory());
     }
@@ -29,12 +30,14 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
             bufferedReader.readLine();//1-я строка заголовок
             String line = bufferedReader.readLine();
             ArrayList<Task> readLinesFromFile = new ArrayList<>();
-            while (bufferedReader.ready() && !line.isEmpty()) {//формируем список задач
+            while (bufferedReader.ready() && !line.isEmpty()) {
+                //формируем список задач
                 readLinesFromFile.add(fileBackedTasksManager.fromString(line));
                 line = bufferedReader.readLine();
             }
             line = bufferedReader.readLine();//история
-            for (Task val : readLinesFromFile) {//заведение задач
+            for (Task val : readLinesFromFile) {
+                //заведение задач
                 if (val instanceof Epic) {
                     Epic epic = (Epic) val;
                     fileBackedTasksManager.addTaskById(epic, epic.getId());
@@ -48,7 +51,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
             updateAddedEpictasks(fileBackedTasksManager);
             List<Integer> arrayList = historyFromString(line);//список для загрузки истории
-            for (Integer intVal : arrayList) {//добавление истории
+            for (Integer intVal : arrayList) {
+                //добавление истории
                 for (Task task : readLinesFromFile) {
                     if ((task.getId() == intVal)) {
                         if (task instanceof Epic) {
@@ -69,7 +73,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     private void save() {
-        File filePath = new File("resources\\historyManager.csv");
+        File filePath = new File(userDirectoryPath);
         try (FileWriter fileWriter = new FileWriter(filePath)) {
             fileWriter.write(title);
             for (Task task : super.getAllTasksList()) {

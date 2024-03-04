@@ -4,23 +4,20 @@ import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 import tasks.TaskStatus;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class InMemoryTaskManager implements TaskManager {
     protected final Map<Integer, Task> taskCollection = new HashMap<>();
     protected final Map<Integer, Subtask> subtaskCollection = new HashMap<>();
     protected final Map<Integer, Epic> epicCollection = new HashMap<>();
+    private final HistoryManager historyManager = Managers.getDefaultHistory();
     protected int nextId = 0;
 
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
-
-    private final HistoryManager historyManager = Managers.getDefaultHistory();
 
     private void updateEpicStatus(Epic epic) {
         if (epic.getEpicSubTasks().size() == 0) {
@@ -32,11 +29,8 @@ public class InMemoryTaskManager implements TaskManager {
         int countDone = 0;
 
         for (Integer epicSubTask : epic.getEpicSubTasks()) {
-            if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.NEW)) {
-                countNew++;
-            } else if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.DONE)) {
-                countDone++;
-            }
+            if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.NEW)) countNew++;
+            else if (subtaskCollection.get(epicSubTask).getStatus().equals(TaskStatus.DONE)) countDone++;
         }
         if (countDone == epicSize) {
             epic.setStatus(TaskStatus.DONE);
