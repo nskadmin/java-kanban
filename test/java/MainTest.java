@@ -1,15 +1,14 @@
-package taskmanager;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import taskmanager.Managers;
+import taskmanager.TaskManager;
 import tasks.Epic;
 import tasks.Subtask;
 import tasks.Task;
 
 import java.util.ArrayList;
 
-public class InMemoryTaskManagerTest {
-
+class MainTest {
     @Test
     public void addEpic() {
         TaskManager inMemoryTaskManager = Managers.getDefault();
@@ -46,9 +45,7 @@ public class InMemoryTaskManagerTest {
         inMemoryTaskManager.addTask(subtaskTwo);
         inMemoryTaskManager.addTask(subtaskThree);
         inMemoryTaskManager.deleteSubTaskById(1);
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            inMemoryTaskManager.deleteEpicById(1);
-        });
+        Assertions.assertThrows(NullPointerException.class, () -> inMemoryTaskManager.deleteEpicById(1));
     }
 
     @Test
